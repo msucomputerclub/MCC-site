@@ -3,8 +3,6 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 
-const test = require("__dirname/test.html");
-
 const app = express();
 
 //Body Parser middleware
@@ -20,7 +18,9 @@ app.use(bodyParser.json());
 //Passport Config
 
 //Use Routes
-app.use("/", test);
+app.get("/", (req, res) => {
+  res.send("Root GET test");
+});
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
