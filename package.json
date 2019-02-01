@@ -1,0 +1,35 @@
+{
+  "name": "mcc-site",
+  "version": "0.0.1",
+  "description": "website for all the club needs",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "server": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/msucomputerclub/MCC-site.git"
+  },
+  "author": "montclair computer club",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/msucomputerclub/MCC-site/issues"
+  },
+  "homepage": "https://github.com/msucomputerclub/MCC-site#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "mongoose": "^5.4.8",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "concurrently": "^4.1.0",
+    "gravatar": "^1.8.0",
+    "jsonwebtoken": "^8.4.0",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "validator": "^10.9.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9"
+  }
+}
