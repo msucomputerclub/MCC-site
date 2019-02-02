@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 
+const profile = require("./api/profile");
+
 const app = express();
 
 //Body Parser middleware
@@ -18,6 +20,8 @@ app.use(bodyParser.json());
 //Passport Config
 
 //Use Routes
+app.use("/api/profile", profile);
+
 app.get("/", (req, res) => {
   res.send("Root GET test");
 });
