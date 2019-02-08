@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 
-const profile = require("./api/profile");
+const users = require("./routes/api/users");
+const profile = require("./routes/api/profile");
 
 const app = express();
 
@@ -12,18 +13,30 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //db config
+db = require("./config/keys").mongoURI;
 
 //connect to mongodb
+mongoose
+  .connect(db, { useNewUrlParser: true })
+  .then(() => {
+    console.log("connected to mongodb");
+  })
+  .catch(err => {
+    console.log(err);
+  });
 
 //Passport middleware
-
+app.use(passport.initialize());
 //Passport Config
+require("./config/passport")(passport);
 
 //Use Routes
+app.use("/api/users", users);
 app.use("/api/profile", profile);
 
+//test route
 app.get("/", (req, res) => {
-  res.send("Root GET test");
+  res.json({ msg: "Root GET test" });
 });
 
 const port = process.env.PORT || 5000;
