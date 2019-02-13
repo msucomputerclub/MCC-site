@@ -31,18 +31,20 @@ router.post("/register", (req, res) => {
     .then(user => {
       if (user) {
         errors.email = "User already exists";
+        res.status(400).json(errors);
       } else {
         const newUser = new User({
           email: req.body.email,
-          password: req.body.password
+          password: req.body.password,
+          firstName: req.body.firstName,
+          middleName: req.body.middleName,
+          lastName: req.body.lastName
         });
         console.log(newUser);
 
         bcrypt.genSalt(10, (err, salt) => {
-          console.log("bcrypting");
-          if (err) console.log("gensalt error");
           bcrypt.hash(newUser.password, salt, (err, hash) => {
-            if (err) console.log("hash error");
+            if (err) throw err;
             newUser.password = hash;
             newUser
               .save()
