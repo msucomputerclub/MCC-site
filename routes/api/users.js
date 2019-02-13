@@ -59,4 +59,33 @@ router.post("/register", (req, res) => {
     .catch(err => console.log(err));
 });
 
+//  @route  GET api/users/all
+//  @desc   Get all users
+//  @access Public
+router.get("/all", (req, res) => {
+  const errors = {};
+  User.find()
+    .then(users => {
+      if (!users) {
+        errors.nousers = "There are no users";
+        return res.status(404).json(errors);
+      }
+      res.json(users);
+    })
+    .catch(err => res.status(404).json({ users: "There are no users" }));
+});
+
+//  @route  DELETE api/users/
+//  @desc   Delete user
+//  @access Public
+router.delete(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    User.findOneAndRemove({ _id: req.user.id }).then(() => {
+      res.json({ success: true });
+    });
+  }
+);
+
 module.exports = router;
