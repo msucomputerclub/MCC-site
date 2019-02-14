@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const bcrypt = require("bcryptjs");
 const passport = require("passport");
+const ensureRole = require("../../validation/ensureRole");
 
 //User Model
 const User = require("../../models/User");
@@ -27,14 +27,15 @@ router.get("/all", (req, res) => {
 //@route POST /api/events/create
 //@desc create event
 //@access Private (Board+)
-
-// router.post(
-//   "/create",
-//   passport.authenticate("jwt", { session: false }),
-//   (req, res) => {
-//       //ensure role
-//       if(req.user)
-//   }
-// );
+router.post("/create", passport.authenticate("jwt", { session: false }), (req, res) => {
+  const errors = {};
+  //ensure role of board
+  if (!ensureRole(req.user.role, "board")) {
+    errors.notauthorized = "You are not authorized to create an event";
+    res.status(401).json(errors);
+  } else {
+    res.json({ success: true });
+  }
+});
 
 module.exports = router;
